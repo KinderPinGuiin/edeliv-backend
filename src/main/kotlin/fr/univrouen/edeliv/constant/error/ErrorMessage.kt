@@ -8,7 +8,10 @@ enum class ErrorMessage(val message: String) {
     ACCESS_DENIED("Accès refusé, veuillez-vous identifier."),
 
     // Authentication errors
-    INVALID_CREDENTIALS("Nom d'utilisateur ou mot de passe invalide"),
-    INVALID_USERNAME("Nom d'utilisateur invalide"),
+    INVALID_CREDENTIALS("Nom d'utilisateur ou mot de passe invalide."),
+    INVALID_USERNAME("Nom d'utilisateur invalide."),
+
+    // Deliverer errors
+    INVALID_DELIVERER_ID("L'identifiant du livreur est invalide."),
 
 }

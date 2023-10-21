@@ -1,7 +1,6 @@
 package fr.univrouen.edeliv.config.security
 
 import fr.univrouen.edeliv.controller.AuthenticationController
-import fr.univrouen.edeliv.controller.HelloController
 import fr.univrouen.edeliv.service.AuthenticationService
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 import org.springframework.context.annotation.Bean
@@ -12,13 +11,10 @@ import org.springframework.security.authentication.ProviderManager
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
-import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
-import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
-import org.springframework.web.servlet.handler.HandlerMappingIntrospector
 
 /**
  * Configure the Spring security component.
@@ -75,8 +71,6 @@ class SecurityConfiguration(
             authorizeHttpRequestsCustomizer
                 // Authorize any requests on the login endpoint
                 .requestMatchers(AntPathRequestMatcher(AuthenticationController.LOGIN_ENDPOINT)).permitAll()
-                // Authorize the non authenticated hello world endpoint
-                .requestMatchers(AntPathRequestMatcher(HelloController.DEFAULT_HELLO)).permitAll() // TODO : Remove
                 // Authorize any requests on the swagger
                 .requestMatchers(
                     AntPathRequestMatcher("/swagger-ui/**"),

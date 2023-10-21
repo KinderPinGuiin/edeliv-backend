@@ -32,7 +32,7 @@ class StandardAuthenticationService(
 
     override fun getCurrentUser(): User = SecurityContextHolder.getContext().authentication.principal as User
 
-    @Transactional(rollbackFor = [ FunctionalException::class ])
+    @Transactional(rollbackFor = [ Exception::class ])
     override fun login(login: String, password: String): String {
         // Get the user associated to the given nickname
         val user = this.userRepository.findByUsername(login)
@@ -53,7 +53,7 @@ class StandardAuthenticationService(
         return user.token!!
     }
 
-    @Transactional(rollbackFor = [ FunctionalException::class ])
+    @Transactional(rollbackFor = [ Exception::class ])
     override fun loadUserByUsername(username: String?): UserDetails =
         this.userRepository.findByUsername(username ?: "") ?: throw FunctionalException(
             ErrorMessage.INVALID_USERNAME,

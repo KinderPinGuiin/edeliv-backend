@@ -1,7 +1,7 @@
 package fr.univrouen.edeliv.controller
 
 import fr.univrouen.edeliv.dto.request.authentication.AuthenticationRequestDTO
-import fr.univrouen.edeliv.dto.response.AuthenticationResponseDTO
+import fr.univrouen.edeliv.dto.response.authentication.AuthenticationResponseDTO
 import fr.univrouen.edeliv.service.AuthenticationService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
