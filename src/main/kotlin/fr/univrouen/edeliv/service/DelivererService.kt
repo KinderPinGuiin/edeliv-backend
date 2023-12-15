@@ -9,6 +9,11 @@ import fr.univrouen.edeliv.exception.FunctionalException
 interface DelivererService {
 
     /**
+     * Retrieves all the deliverers and apply the given filters to the result.
+     */
+    fun getAllDeliverers(): List<Deliverer>;
+
+    /**
      * Retrieves the deliverer associated to the given ID.
      *
      * @param  id                  The deliverer to get ID.

@@ -2,12 +2,14 @@ package fr.univrouen.edeliv.controller
 
 import fr.univrouen.edeliv.adapter.deliverer.DelivererAdapter
 import fr.univrouen.edeliv.dto.request.deliverer.CreateDelivererRequestDTO
+import fr.univrouen.edeliv.dto.request.deliverer.GetAllDeliverersSearchParamsDTO
 import fr.univrouen.edeliv.dto.request.deliverer.UpdateDelivererRequestDTO
 import fr.univrouen.edeliv.service.DelivererService
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 /**
@@ -20,10 +22,16 @@ class DelivererController(
 
     companion object {
         const val DELIVERER_ROOT = "/deliverer"
+        const val GET_ALL_DELIVERERS = "$DELIVERER_ROOT/get-all"
         const val GET_DELIVERER = "$DELIVERER_ROOT/get/{id}"
         const val CREATE_DELIVERER = "$DELIVERER_ROOT/create"
         const val UPDATE_DELIVERER = "$DELIVERER_ROOT/update"
         const val DELETE_DELIVERER = "$DELIVERER_ROOT/delete/{id}"
+    }
+
+    @GetMapping(GET_ALL_DELIVERERS)
+    fun getAllDeliverers(@RequestParam searchParams: GetAllDeliverersSearchParamsDTO) {
+
     }
 
     /**
