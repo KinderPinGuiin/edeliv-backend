@@ -2,15 +2,16 @@ package fr.univrouen.edeliv.controller
 
 import fr.univrouen.edeliv.adapter.deliverer.DelivererAdapter
 import fr.univrouen.edeliv.dto.request.deliverer.CreateDelivererRequestDTO
-import fr.univrouen.edeliv.dto.request.deliverer.GetAllDeliverersSearchParamsDTO
 import fr.univrouen.edeliv.dto.request.deliverer.UpdateDelivererRequestDTO
 import fr.univrouen.edeliv.service.DelivererService
+import fr.univrouen.edeliv.service.pojo.deliverer.DelivererSearchParams
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.time.Instant
 
 /**
  * The deliverer controller allows a user to manage the deliverers.
@@ -30,9 +31,21 @@ class DelivererController(
     }
 
     @GetMapping(GET_ALL_DELIVERERS)
-    fun getAllDeliverers(@RequestParam searchParams: GetAllDeliverersSearchParamsDTO) {
-
-    }
+    fun getAllDeliverers(
+        @RequestParam("page") page: Int,
+        @RequestParam("pageSize") pageSize: Int,
+        @RequestParam("minDate") minDate: Instant?,
+        @RequestParam("maxDate") maxDate: Instant?,
+        @RequestParam("isDelivererAvailable") isDelivererAvailable: Boolean?,
+        @RequestParam("nameSort") nameSort: Byte?,
+        @RequestParam("creationDateSort") creationDateSort: Byte?,
+        @RequestParam("nameFilter") nameFilter: String?,
+    ) =
+         this.delivererService.getAllDeliverers(
+             DelivererSearchParams(
+                 page, pageSize, minDate, maxDate, isDelivererAvailable, nameSort, creationDateSort, nameFilter
+             )
+        )
 
     /**
      * @param  id The ID of the deliverer to retrieve.
