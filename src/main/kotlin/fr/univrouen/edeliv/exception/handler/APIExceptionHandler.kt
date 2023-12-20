@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.context.request.WebRequest
-import org.springframework.security.access.AccessDeniedException
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 
 /**
@@ -38,21 +37,6 @@ class APIExceptionHandler : ResponseEntityExceptionHandler() {
         return ResponseEntity
             .status(exception.httpStatus)
             .body(exception.error ?: SimpleAPIErrorDTO(ErrorMessage.UNKNOWN_ERROR.message))
-    }
-
-    /**
-     * Handles the AccessDeniedException.
-     *
-     * @param  exception The exception that occurred.
-     * @param  request   The user HTTP request.
-     * @return           The response to send to the user.
-     */
-    @ExceptionHandler(value = [ AccessDeniedException::class ])
-    fun accessDeniedException(exception: AccessDeniedException, request: WebRequest): ResponseEntity<APIErrorDTO> {
-        logger.error(exception)
-        logger.trace(exception.printStackTrace())
-        logger.debug(exception.printStackTrace())
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(SimpleAPIErrorDTO(ErrorMessage.ACCESS_DENIED.message))
     }
 
     /**
