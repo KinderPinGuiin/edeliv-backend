@@ -9,4 +9,7 @@ enum class ErrorMessage(val message: String) {
     // Deliverer errors
     INVALID_DELIVERER_ID("L'identifiant du livreur est invalide."),
 
+    // Delivery errors
+    INVALID_DELIVERY_ID("L'identifiant de la livraison est invalide."),
+
 }

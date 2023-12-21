@@ -12,7 +12,7 @@ interface DelivererService {
     /**
      * Retrieves the deliverer associated to the given ID.
      *
-     * @param  id                  The deliverer to get ID.
+     * @param  id                  The ID of the deliverer to get.
      * @return                     The deliverer associated to the given ID.
      * @throws FunctionalException Exception thrown if the given ID is invalid.
      */
@@ -38,7 +38,7 @@ interface DelivererService {
     /**
      * Updates the given deliverer with the given new values.
      *
-     * @param  id                  The deliverer to update ID.
+     * @param  id                  The ID of the delivery to update.
      * @param  newName             The new name of the deliverer.
      * @param  newIsAvailable      Indicates if the deliverer is available or not.
      * @return                     The updated deliverer.
@@ -50,7 +50,7 @@ interface DelivererService {
     /**
      * Deletes the deliverer associated to the given ID.
      *
-     * @param  id                  The deliverer to delete ID.
+     * @param  id                  The ID of the deliverer to delete.
      * @return                     The deleted deliverer.
      * @throws FunctionalException Exception thrown if the given ID is invalid.
      */

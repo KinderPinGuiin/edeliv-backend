@@ -1,7 +1,9 @@
 package fr.univrouen.edeliv.config.database
 
 import fr.univrouen.edeliv.entity.Deliverer
+import fr.univrouen.edeliv.entity.Delivery
 import fr.univrouen.edeliv.repository.DelivererRepository
+import fr.univrouen.edeliv.repository.DeliveryRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.ApplicationArguments
@@ -20,6 +22,7 @@ import java.time.temporal.ChronoUnit
 @Order(1)
 class DevDatabaseInitializer(
     private val delivererRepository: DelivererRepository,
+    private val deliveryRepository: DeliveryRepository,
 ) : ApplicationRunner {
 
     companion object {
@@ -30,7 +33,8 @@ class DevDatabaseInitializer(
      * Initialize the dev data.
      */
     override fun run(args: ApplicationArguments?) {
-        this.initDeliverers();
+        this.initDeliverers()
+        this.initDeliveries()
 
         logger.info("The development data has been initialized.")
     }
@@ -44,6 +48,12 @@ class DevDatabaseInitializer(
 
         this.delivererRepository.save(Deliverer(0L, "Robin Sean", true, Instant.now().minus(7, ChronoUnit.DAYS)))
         this.delivererRepository.save(Deliverer(0L, "Roberta Miguel", false, Instant.now().minus(7, ChronoUnit.DAYS)))
+    }
+
+    fun initDeliveries() {
+        this.deliveryRepository.save(Delivery(0L, "30 Rue de la république", "20 Rue de la marchande"))
+        this.deliveryRepository.save(Delivery(0L, "12 Avenue Jean Sarlau", "41 Rue Jean Jaures"))
+        this.deliveryRepository.save(Delivery(0L, "125 Avenue Mc Risy", "1 Rue du Plon"))
     }
 
 }

@@ -32,6 +32,9 @@ class DelivererController(
         const val DELETE_DELIVERER = "$DELIVERER_ROOT/delete/{id}"
     }
 
+    /**
+     * Retrieves all the deliverers that matches the given criteria.
+     */
     @GetMapping(GET_ALL_DELIVERERS)
     fun getAllDeliverers(
         @RequestParam("page") page: Int,
