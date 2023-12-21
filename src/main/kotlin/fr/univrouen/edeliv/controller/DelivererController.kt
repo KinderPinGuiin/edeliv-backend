@@ -1,6 +1,5 @@
 package fr.univrouen.edeliv.controller
 
-import fr.univrouen.edeliv.adapter.deliverer.DelivererAdapter
 import fr.univrouen.edeliv.dto.request.deliverer.CreateDelivererRequestDTO
 import fr.univrouen.edeliv.dto.request.deliverer.UpdateDelivererRequestDTO
 import fr.univrouen.edeliv.dto.response.deliverer.DelivererResponseDTO
@@ -92,6 +91,6 @@ class DelivererController(
      */
     @DeleteMapping(DELETE_DELIVERER)
     fun deleteDeliverer(@PathVariable("id") id: Long) =
-        DelivererAdapter.fromDeliverer(this.delivererService.deleteDeliverer(id))
+        this.modelMapper.map(this.delivererService.deleteDeliverer(id), DelivererResponseDTO::class.java)
 
 }
