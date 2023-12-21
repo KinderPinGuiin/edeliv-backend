@@ -8,6 +8,9 @@ import fr.univrouen.edeliv.service.pojo.delivery.DeliverySearchParams
 import org.modelmapper.ModelMapper
 import org.springframework.web.bind.annotation.*
 
+/**
+ * The delivery controller allows a user to manage the deliveries.
+ */
 @RestController
 class DeliveryController(
     private val deliveryService: DeliveryService,
