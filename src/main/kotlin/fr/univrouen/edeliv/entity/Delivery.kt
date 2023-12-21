@@ -1,8 +1,6 @@
 package fr.univrouen.edeliv.entity
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
+import jakarta.persistence.*
 
 /**
  * CLass representing a delivery.
@@ -25,8 +23,12 @@ class Delivery(
      * The location where the delivery arrives.
      */
     var endAddress: String,
+
+    @ManyToOne
+    @JoinColumn(name = "tour_id", nullable = true)
+    var tour: DeliveryTour?,
 ) {
 
-    constructor(): this(0, "", "")
+    constructor(): this(0, "", "", null)
 
 }

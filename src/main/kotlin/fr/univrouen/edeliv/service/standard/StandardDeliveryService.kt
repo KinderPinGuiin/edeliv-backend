@@ -22,7 +22,7 @@ class StandardDeliveryService(
     override fun getDeliveryById(id: Long): Delivery {
         // Get the delivery and throw an exception if it is null
         return this.deliveryRepository.findById(id).orElse(null)
-            ?: throw FunctionalException(ErrorMessage.INVALID_DELIVERER_ID, HttpStatus.NOT_FOUND)
+            ?: throw FunctionalException(ErrorMessage.INVALID_DELIVERY_ID, HttpStatus.NOT_FOUND)
     }
 
     override fun getAllDeliveries(searchParams: DeliverySearchParams?): List<Delivery> {
@@ -39,11 +39,13 @@ class StandardDeliveryService(
     @Transactional(rollbackFor = [ Exception::class ])
     override fun createDelivery(startAddress: String, endAddress: String): Delivery {
         // Save the delivery created with the given information
-        return this.deliveryRepository.save(Delivery(0L, startAddress, endAddress))
+        return this.deliveryRepository.save(Delivery(0L, startAddress, endAddress, null))
     }
 
     @Transactional(rollbackFor = [ Exception::class ])
     override fun updateDelivery(id: Long, startAddress: String, endAddress: String): Delivery {
+        // TODO : Ajouter une tournée à la livraison
+
         // Get the delivery and update it
         val delivery = this.getDeliveryById(id)
         delivery.startAddress = startAddress
