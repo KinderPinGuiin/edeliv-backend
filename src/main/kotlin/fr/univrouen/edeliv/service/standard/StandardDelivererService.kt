@@ -45,6 +45,7 @@ class StandardDelivererService(
             orders.add(Sort.Order.asc("creationDate"))
         }
 
+        // Retrieve the asked deliverers sorted and filtered
         return this.delivererRepository.findAllWithSearchParams(
             searchParams.minDate ?: Instant.EPOCH,
             searchParams.maxDate ?: Instant.MAX,

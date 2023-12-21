@@ -2,6 +2,7 @@ package fr.univrouen.edeliv.repository
 
 import fr.univrouen.edeliv.entity.Deliverer
 import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import java.time.Instant
@@ -9,7 +10,7 @@ import java.time.Instant
 /**
  * The deliverer repository allows us to retrieve information about the deliverers.
  */
-interface DelivererRepository : CrudRepository<Deliverer, Long> {
+interface DelivererRepository : JpaRepository<Deliverer, Long> {
 
     @Query("""
         SELECT d 

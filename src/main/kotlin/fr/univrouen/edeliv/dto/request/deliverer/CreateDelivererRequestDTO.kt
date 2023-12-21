@@ -7,10 +7,10 @@ class CreateDelivererRequestDTO(
     /**
      * The deliverer's name.
      */
-    val name: String,
+    var name: String,
 
     /**
      * Indicates if the deliverer is available or not.
      */
-    val isAvailable: Boolean,
+    var isAvailable: Boolean,
 )
