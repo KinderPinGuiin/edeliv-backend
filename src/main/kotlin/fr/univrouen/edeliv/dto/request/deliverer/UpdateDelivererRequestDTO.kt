@@ -7,15 +7,15 @@ class UpdateDelivererRequestDTO(
     /**
      * The ID of the deliverer to update.
      */
-    val id: Long,
+    var id: Long,
 
     /**
      * The new name of the deliverer.
      */
-    val newName: String,
+    var newName: String,
 
     /**
      * Indicates if the deliverer is available or not.
      */
-    val newIsAvailable: Boolean,
+    var newIsAvailable: Boolean,
 )

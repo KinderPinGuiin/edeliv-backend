@@ -3,8 +3,10 @@ package fr.univrouen.edeliv.controller
 import fr.univrouen.edeliv.adapter.deliverer.DelivererAdapter
 import fr.univrouen.edeliv.dto.request.deliverer.CreateDelivererRequestDTO
 import fr.univrouen.edeliv.dto.request.deliverer.UpdateDelivererRequestDTO
+import fr.univrouen.edeliv.dto.response.deliverer.DelivererResponseDTO
 import fr.univrouen.edeliv.service.DelivererService
 import fr.univrouen.edeliv.service.pojo.deliverer.DelivererSearchParams
+import org.modelmapper.ModelMapper
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -19,6 +21,7 @@ import java.time.Instant
 @RestController
 class DelivererController(
     private val delivererService: DelivererService,
+    private val modelMapper: ModelMapper,
 ) {
 
     companion object {
@@ -41,11 +44,11 @@ class DelivererController(
         @RequestParam("creationDateSort") creationDateSort: Byte?,
         @RequestParam("nameFilter") nameFilter: String?,
     ) =
-         this.delivererService.getAllDeliverers(
-             DelivererSearchParams(
-                 page, pageSize, minDate, maxDate, isDelivererAvailable, nameSort, creationDateSort, nameFilter
-             )
-        )
+        this.delivererService.getAllDeliverers(
+            DelivererSearchParams(
+                page, pageSize, minDate, maxDate, isDelivererAvailable, nameSort, creationDateSort, nameFilter
+            )
+        ).map { deliverer -> this.modelMapper.map(deliverer, DelivererResponseDTO::class.java) }
 
     /**
      * @param  id The ID of the deliverer to retrieve.
@@ -53,7 +56,7 @@ class DelivererController(
      */
     @GetMapping(GET_DELIVERER)
     fun getDeliverer(@PathVariable("id") id: Long) =
-        DelivererAdapter.fromDeliverer(this.delivererService.getDelivererById(id))
+        this.modelMapper.map(this.delivererService.getDelivererById(id), DelivererResponseDTO::class.java)
 
     /**
      * Creates a deliverer with the given information.
@@ -63,8 +66,9 @@ class DelivererController(
      */
     @PostMapping(CREATE_DELIVERER)
     fun createDeliverer(creationRequest: CreateDelivererRequestDTO) =
-        DelivererAdapter.fromDeliverer(
-            this.delivererService.createDeliverer(creationRequest.name, creationRequest.isAvailable)
+        this.modelMapper.map(
+            this.delivererService.createDeliverer(creationRequest.name, creationRequest.isAvailable),
+            DelivererResponseDTO::class.java
         )
 
     /**
@@ -75,8 +79,9 @@ class DelivererController(
      */
     @PostMapping(UPDATE_DELIVERER)
     fun updateDeliverer(updateRequest: UpdateDelivererRequestDTO) =
-        DelivererAdapter.fromDeliverer(
-            this.delivererService.updateDeliverer(updateRequest.id, updateRequest.newName, updateRequest.newIsAvailable)
+        this.modelMapper.map(
+            this.delivererService.updateDeliverer(updateRequest.id, updateRequest.newName, updateRequest.newIsAvailable),
+            DelivererResponseDTO::class.java
         )
 
     /**
