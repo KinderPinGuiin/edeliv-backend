@@ -3,6 +3,7 @@ package fr.univrouen.edeliv.controller
 import fr.univrouen.edeliv.dto.request.deliverer.CreateDelivererRequestDTO
 import fr.univrouen.edeliv.dto.request.deliverer.UpdateDelivererRequestDTO
 import fr.univrouen.edeliv.dto.response.search.SearchResultResponseDTO
+import fr.univrouen.edeliv.entity.Deliverer
 import fr.univrouen.edeliv.service.DelivererService
 import fr.univrouen.edeliv.service.pojo.deliverer.DelivererSearchParams
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -38,25 +39,34 @@ class DelivererController(
      */
     @GetMapping(GET_ALL_DELIVERERS)
     fun getAllDeliverers(
-        @RequestParam("page") page: Int,
-        @RequestParam("pageSize") pageSize: Int,
+        @RequestParam("page") page: Int?,
+        @RequestParam("pageSize") pageSize: Int?,
         @RequestParam("minDate") minDate: Instant?,
         @RequestParam("maxDate") maxDate: Instant?,
         @RequestParam("isDelivererAvailable") isDelivererAvailable: Boolean?,
         @RequestParam("nameSort") nameSort: Byte?,
         @RequestParam("creationDateSort") creationDateSort: Byte?,
         @RequestParam("nameFilter") nameFilter: String?,
-    ) =
-        SearchResultResponseDTO(
-            page,
-            pageSize,
-            this.delivererService.getDelivererAmount(),
-            this.delivererService.getAllDeliverers(
-                DelivererSearchParams(
-                    page, pageSize, minDate, maxDate, isDelivererAvailable, nameSort, creationDateSort, nameFilter
+    ): SearchResultResponseDTO<Deliverer> {
+        val delivererAmount = this.delivererService.getDelivererAmount()
+        return if (page == null) {
+            SearchResultResponseDTO(
+                0, 0, delivererAmount, this.delivererService.getAllDeliverers(null)
+            )
+        } else {
+            SearchResultResponseDTO(
+                page,
+                pageSize ?: 10,
+                this.delivererService.getDelivererAmount(),
+                this.delivererService.getAllDeliverers(
+                    DelivererSearchParams(
+                        page, pageSize, minDate, maxDate, isDelivererAvailable, nameSort, creationDateSort, nameFilter
+                    )
                 )
             )
-        )
+        }
+
+    }
 
 
     /**

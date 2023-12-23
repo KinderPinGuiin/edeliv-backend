@@ -24,6 +24,9 @@ class Delivery(
      */
     var endAddress: String,
 
+    /**
+     * The tour associated to the delivery.
+     */
     @ManyToOne
     @JoinColumn(name = "tour_id", nullable = true)
     var tour: DeliveryTour?,

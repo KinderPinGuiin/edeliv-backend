@@ -10,6 +10,11 @@ import fr.univrouen.edeliv.service.pojo.delivery.DeliverySearchParams
 interface DeliveryService {
 
     /**
+     * @return The amount of deliveries in the database.
+     */
+    fun getDeliveryAmount(): Long
+
+    /**
      * Retrieves the delivery associated to the given ID.
      *
      * @param  id                  The ID of the delivery to get.

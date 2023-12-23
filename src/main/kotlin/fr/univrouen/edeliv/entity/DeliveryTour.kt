@@ -13,7 +13,7 @@ class DeliveryTour(
      * The delivery tour's name (ID of the tour).
      */
     @Id
-    val name: String,
+    var name: String,
 
     /**
      * The delivery tour's start date.

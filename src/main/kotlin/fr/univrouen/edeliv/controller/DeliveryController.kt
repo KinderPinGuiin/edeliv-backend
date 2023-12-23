@@ -2,6 +2,8 @@ package fr.univrouen.edeliv.controller
 
 import fr.univrouen.edeliv.dto.request.delivery.CreateDeliveryRequestDTO
 import fr.univrouen.edeliv.dto.request.delivery.UpdateDeliveryRequestDTO
+import fr.univrouen.edeliv.dto.response.search.SearchResultResponseDTO
+import fr.univrouen.edeliv.entity.Delivery
 import fr.univrouen.edeliv.service.DeliveryService
 import fr.univrouen.edeliv.service.pojo.delivery.DeliverySearchParams
 import org.springframework.web.bind.annotation.*
@@ -28,11 +30,25 @@ class DeliveryController(
      */
     @GetMapping(GET_ALL_DELIVERIES)
     fun getAllDeliveries(
-        @RequestParam("page") page: Int,
-        @RequestParam("pageSize") pageSize: Int,
+        @RequestParam("page") page: Int?,
+        @RequestParam("pageSize") pageSize: Int?,
         @RequestParam("deliveryTour") deliveryTour: String?,
-    ) =
-        this.deliveryService.getAllDeliveries(DeliverySearchParams(page, pageSize, deliveryTour))
+    ): SearchResultResponseDTO<Delivery> {
+        val deliveryAmount = this.deliveryService.getDeliveryAmount()
+        return if (page == null) {
+            SearchResultResponseDTO(
+                0, 0, deliveryAmount, this.deliveryService.getAllDeliveries(null)
+            )
+        } else {
+            SearchResultResponseDTO(
+                page,
+                pageSize ?: 10,
+                deliveryAmount,
+                this.deliveryService.getAllDeliveries(DeliverySearchParams(page, pageSize, deliveryTour))
+            )
+        }
+    }
+
 
     /**
      * @param  id The ID of the delivery to retrieve.

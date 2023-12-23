@@ -21,6 +21,8 @@ class StandardDeliveryService(
     private val deliveryTourService: DeliveryTourService,
 ) : DeliveryService {
 
+    override fun getDeliveryAmount(): Long = this.deliveryRepository.count()
+
     override fun getDeliveryById(id: Long): Delivery {
         // Get the delivery and throw an exception if it is null
         return this.deliveryRepository.findById(id).orElse(null)
@@ -35,6 +37,7 @@ class StandardDeliveryService(
         // Retrieve the asked deliverers sorted and filtered
         return this.deliveryRepository.findAllWithSearchParams(
             PageRequest.of(searchParams.page ?: 0, searchParams.pageSize ?: 10),
+            searchParams.deliveryTour
         )
     }
 

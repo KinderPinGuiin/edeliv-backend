@@ -3,6 +3,7 @@ package fr.univrouen.edeliv.service.standard
 import fr.univrouen.edeliv.constant.error.ErrorMessage
 import fr.univrouen.edeliv.entity.DeliveryTour
 import fr.univrouen.edeliv.exception.FunctionalException
+import fr.univrouen.edeliv.repository.DeliveryRepository
 import fr.univrouen.edeliv.repository.DeliveryTourRepository
 import fr.univrouen.edeliv.service.DelivererService
 import fr.univrouen.edeliv.service.DeliveryTourService
@@ -20,7 +21,10 @@ import java.time.Instant
 class StandardDeliveryTourService(
     private val deliveryTourRepository: DeliveryTourRepository,
     private val delivererService: DelivererService,
+    private val deliveryRepository: DeliveryRepository,
 ) : DeliveryTourService {
+
+    override fun getDeliveryTourAmount(): Long = this.deliveryTourRepository.count()
 
     override fun getDeliveryTourByName(name: String): DeliveryTour {
         // Get the delivery tour and throw an exception if it is null
@@ -66,10 +70,34 @@ class StandardDeliveryTourService(
         startDate: Instant,
         endDate: Instant,
         delivererId: Long,
-        deliveries: List<Long>
+        deliveriesIds: List<Long>
     ): DeliveryTour {
-        // TODO : penser à vérifier que deux dates ne se superposent pas à la modification
-        TODO("Not yet implemented")
+        // Retrieve the given delivery tour
+        val deliveryTour = this.getDeliveryTourByName(name)
+
+        // Check that the given parameters are valid
+        if (startDate >= endDate) {
+            throw FunctionalException(ErrorMessage.INVALID_TOUR_END_DATE, HttpStatus.BAD_REQUEST)
+        }
+
+        val deliverer = this.delivererService.getDelivererById(delivererId)
+        val existingDeliveryTourAtDate = this.deliveryTourRepository.findTourByDate(deliverer, startDate)
+        if (existingDeliveryTourAtDate.isPresent && existingDeliveryTourAtDate.get().name != name) {
+            throw FunctionalException(ErrorMessage.TOUR_ALREADY_EXISTS_AT_DATE, HttpStatus.BAD_REQUEST)
+        }
+
+        val deliveries = deliveriesIds.map {
+            deliveryId -> this.deliveryRepository.findById(deliveryId).orElse(null)
+                ?: throw FunctionalException(ErrorMessage.INVALID_DELIVERY_ID, HttpStatus.NOT_FOUND)
+        }.toMutableList()
+
+        deliveryTour.name = name
+        deliveryTour.startDate = startDate
+        deliveryTour.endDate = endDate
+        deliveryTour.deliverer = deliverer
+        deliveryTour.deliveries = deliveries
+
+        return this.deliveryTourRepository.save(deliveryTour)
     }
 
     @Transactional(rollbackFor = [ Exception::class ])

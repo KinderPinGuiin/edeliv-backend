@@ -2,6 +2,8 @@ package fr.univrouen.edeliv.controller
 
 import fr.univrouen.edeliv.dto.request.deliverytour.CreateDeliveryTourRequestDTO
 import fr.univrouen.edeliv.dto.request.deliverytour.UpdateDeliveryTourRequestDTO
+import fr.univrouen.edeliv.dto.response.search.SearchResultResponseDTO
+import fr.univrouen.edeliv.entity.DeliveryTour
 import fr.univrouen.edeliv.service.DeliveryTourService
 import fr.univrouen.edeliv.service.pojo.deliverytour.DeliveryTourSearchParam
 import org.springframework.web.bind.annotation.*
@@ -28,12 +30,25 @@ class DeliveryTourController(
      * Retrieves all the delivery tours that matches the given criteria.
      */
     @GetMapping(GET_ALL_DELIVERY_TOURS)
-    fun getAllDeliveryTours(
-        @RequestParam("page") page: Int,
-        @RequestParam("pageSize") pageSize: Int,
+    fun getAllDeliveryToursPaginated(
+        @RequestParam("page") page: Int?,
+        @RequestParam("pageSize") pageSize: Int?,
         @RequestParam("tourDate") tourDate: Instant?,
-    ) =
-        this.deliveryTourService.getAllDeliveryTours(DeliveryTourSearchParam(page, pageSize, tourDate))
+    ): SearchResultResponseDTO<DeliveryTour> {
+        val deliveryTourAmount = this.deliveryTourService.getDeliveryTourAmount()
+        return if (page == null) {
+            SearchResultResponseDTO(
+                0, 0, deliveryTourAmount, this.deliveryTourService.getAllDeliveryTours(null)
+            )
+        } else {
+            SearchResultResponseDTO(
+                page,
+                pageSize ?: 10,
+                deliveryTourAmount,
+                this.deliveryTourService.getAllDeliveryTours(DeliveryTourSearchParam(page, pageSize, tourDate))
+            )
+        }
+    }
 
     /**
      * @param  name The name of the delivery tour to retrieve.
