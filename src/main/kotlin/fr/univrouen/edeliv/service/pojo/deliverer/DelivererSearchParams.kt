@@ -27,7 +27,7 @@ class DelivererSearchParams(
     val maxDate: Instant?,
 
     /**
-     * Should the deliverer only be available ? (default : false)
+     * Is the deliverer available ?
      */
     val isDelivererAvailable: Boolean?,
 

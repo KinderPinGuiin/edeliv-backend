@@ -17,13 +17,13 @@ interface DelivererRepository : JpaRepository<Deliverer, Long> {
         FROM Deliverer AS d
         WHERE d.creationDate >= :minDate 
             AND d.creationDate < :maxDate 
-            AND (:isDelivererAvailable = false OR isAvailable = true)
+            AND (:isDelivererAvailable IS NULL OR (:isDelivererAvailable = true AND isAvailable = true) OR (:isDelivererAvailable = false AND isAvailable = false))
             AND (:nameFilter IS NULL OR LOWER(d.name) LIKE LOWER(CONCAT('%', :nameFilter, '%')))
     """)
     fun findAllWithSearchParams(
         minDate: Instant,
         maxDate: Instant,
-        isDelivererAvailable: Boolean,
+        isDelivererAvailable: Boolean?,
         nameFilter: String?,
         page: Pageable,
     ): List<Deliverer>

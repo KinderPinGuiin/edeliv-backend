@@ -10,6 +10,11 @@ import fr.univrouen.edeliv.service.pojo.deliverer.DelivererSearchParams
 interface DelivererService {
 
     /**
+     * @return The amount of deliverers in the database.
+     */
+    fun getDelivererAmount(): Long
+
+    /**
      * Retrieves the deliverer associated to the given ID.
      *
      * @param  id                  The ID of the deliverer to get.

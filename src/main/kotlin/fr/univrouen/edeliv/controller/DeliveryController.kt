@@ -20,10 +20,10 @@ class DeliveryController(
     companion object {
         const val DELIVERY_ROOT = "/delivery"
         const val GET_ALL_DELIVERIES = "$DELIVERY_ROOT/get-all"
-        const val GET_DELIVERY = "$DELIVERY_ROOT/get/{id}"
+        const val GET_DELIVERY = "$DELIVERY_ROOT/get"
         const val CREATE_DELIVERY = "$DELIVERY_ROOT/create"
         const val UPDATE_DELIVERY = "$DELIVERY_ROOT/update"
-        const val DELETE_DELIVERY = "$DELIVERY_ROOT/delete/{id}"
+        const val DELETE_DELIVERY = "$DELIVERY_ROOT/delete"
     }
 
     /**
@@ -43,7 +43,7 @@ class DeliveryController(
      * @return    The delivery associated to the given ID.
      */
     @GetMapping(GET_DELIVERY)
-    fun getDelivery(@PathVariable("id") id: Long) =
+    fun getDelivery(@RequestParam("id") id: Long) =
         this.modelMapper.map(this.deliveryService.getDeliveryById(id), DeliveryResponseDTO::class.java)
 
     /**
@@ -53,7 +53,7 @@ class DeliveryController(
      * @return                 The created delivery.
      */
     @PostMapping(CREATE_DELIVERY)
-    fun createDelivery(creationRequest: CreateDeliveryRequestDTO) =
+    fun createDelivery(@RequestBody creationRequest: CreateDeliveryRequestDTO) =
         this.modelMapper.map(
             this.deliveryService.createDelivery(creationRequest.startAddress, creationRequest.endAddress),
             DeliveryResponseDTO::class.java
@@ -66,7 +66,7 @@ class DeliveryController(
      * @return               The updated delivery.
      */
     @PostMapping(UPDATE_DELIVERY)
-    fun updateDelivery(updateRequest: UpdateDeliveryRequestDTO) =
+    fun updateDelivery(@RequestBody updateRequest: UpdateDeliveryRequestDTO) =
         this.modelMapper.map(
             this.deliveryService.updateDelivery(updateRequest.id, updateRequest.newStartAddress, updateRequest.newEndAddress),
             DeliveryResponseDTO::class.java
@@ -79,7 +79,7 @@ class DeliveryController(
      * @return    The removed delivery.
      */
     @DeleteMapping(DELETE_DELIVERY)
-    fun deleteDelivery(@PathVariable("id") id: Long) =
+    fun deleteDelivery(@RequestParam("id") id: Long) =
         this.modelMapper.map(this.deliveryService.deleteDelivery(id), DeliveryResponseDTO::class.java)
 
 }
