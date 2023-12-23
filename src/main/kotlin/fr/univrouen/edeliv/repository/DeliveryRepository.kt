@@ -4,10 +4,12 @@ import fr.univrouen.edeliv.entity.Delivery
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
+import org.springframework.stereotype.Repository
 
 /**
  * The delivery repository allows us to retrieve information about the deliveries.
  */
+@Repository
 interface DeliveryRepository : JpaRepository<Delivery, Long> {
 
     // TODO : Add delivery tour filter

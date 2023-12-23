@@ -7,6 +7,7 @@ import fr.univrouen.edeliv.repository.DeliveryTourRepository
 import fr.univrouen.edeliv.service.DelivererService
 import fr.univrouen.edeliv.service.DeliveryTourService
 import fr.univrouen.edeliv.service.pojo.deliverytour.DeliveryTourSearchParam
+import org.springframework.data.domain.PageRequest
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -28,7 +29,13 @@ class StandardDeliveryTourService(
     }
 
     override fun getAllDeliveryTours(searchParams: DeliveryTourSearchParam?): List<DeliveryTour> {
-        TODO("Not yet implemented")
+        if (searchParams == null) {
+            return this.deliveryTourRepository.findAll();
+        }
+
+        return this.deliveryTourRepository.findAllWithSearchParams(
+            PageRequest.of(searchParams.page ?: 0, searchParams.pageSize ?: 10), searchParams.tourDate
+        )
     }
 
     @Transactional(rollbackFor = [ Exception::class ])
@@ -67,7 +74,10 @@ class StandardDeliveryTourService(
 
     @Transactional(rollbackFor = [ Exception::class ])
     override fun deleteDeliveryTour(name: String): DeliveryTour {
-        TODO("Not yet implemented")
+        val deliveryTour = this.getDeliveryTourByName(name)
+        this.deliveryTourRepository.delete(deliveryTour)
+
+        return deliveryTour
     }
 
 }
