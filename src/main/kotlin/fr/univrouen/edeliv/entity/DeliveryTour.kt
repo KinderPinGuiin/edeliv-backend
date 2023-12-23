@@ -1,8 +1,6 @@
 package fr.univrouen.edeliv.entity
 
-import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.*
 import java.time.Instant
 
@@ -46,5 +44,10 @@ class DeliveryTour(
 ) {
 
     constructor(): this("", Instant.EPOCH, Instant.EPOCH, Deliverer(), mutableListOf())
+
+    @PreRemove
+    fun preRemove() {
+        deliveries.forEach { delivery -> delivery.tour = null }
+    }
 
 }

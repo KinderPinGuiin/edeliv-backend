@@ -1,7 +1,6 @@
 package fr.univrouen.edeliv.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.*
 import java.time.Instant
 
@@ -36,7 +35,7 @@ class Deliverer(
     /**
      * The delivery tours associated to this deliverer.
      */
-    @OneToMany(mappedBy = "deliverer")
+    @OneToMany(mappedBy = "deliverer", orphanRemoval = true)
     @JsonIgnoreProperties("deliverer")
     var deliveryTours: MutableList<DeliveryTour>,
 ) {
