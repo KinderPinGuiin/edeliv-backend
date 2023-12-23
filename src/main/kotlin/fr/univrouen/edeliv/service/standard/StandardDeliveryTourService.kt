@@ -58,6 +58,7 @@ class StandardDeliveryTourService(
         name: String,
         startDate: Instant,
         endDate: Instant,
+        delivererId: Long,
         deliveries: List<Long>
     ): DeliveryTour {
         // TODO : penser à vérifier que deux dates ne se superposent pas à la modification

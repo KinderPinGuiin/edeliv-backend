@@ -59,7 +59,7 @@ class DeliveryController(
      */
     @PostMapping(UPDATE_DELIVERY)
     fun updateDelivery(@RequestBody updateRequest: UpdateDeliveryRequestDTO) =
-        this.deliveryService.updateDelivery(updateRequest.id, updateRequest.newStartAddress, updateRequest.newEndAddress)
+        this.deliveryService.updateDelivery(updateRequest.id, updateRequest.newStartAddress, updateRequest.newEndAddress, updateRequest.deliveryTourId)
 
     /**
      * Removes the given delivery.

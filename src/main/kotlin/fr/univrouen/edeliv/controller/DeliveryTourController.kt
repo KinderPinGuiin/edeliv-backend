@@ -66,7 +66,7 @@ class DeliveryTourController(
     @PostMapping(UPDATE_DELIVERY_TOUR)
     fun updateDeliveryTour(@RequestBody updateRequest: UpdateDeliveryTourRequestDTO) =
         this.deliveryTourService.updateDeliveryTour(
-            updateRequest.name, updateRequest.newStartDate, updateRequest.newEndDate, updateRequest.deliveries
+            updateRequest.name, updateRequest.newStartDate, updateRequest.newEndDate, updateRequest.delivererId, updateRequest.deliveries
         )
 
     /**

@@ -41,11 +41,12 @@ interface DeliveryService {
      * @param  id                  The ID of the delivery to update.
      * @param  startAddress        The new location of the beginning of the delivery.
      * @param  endAddress          The new location of where the delivery should arrive.
+     * @param  deliveryTourId      The delivery tour associated to the delivery.
      * @return                     The updated delivery.
-     * @throws FunctionalException Exception thrown if the given ID is invalid.
+     * @throws FunctionalException Exception thrown if the given ID is invalid, or if the deliverer doesn't exist.
      */
     @Throws(FunctionalException::class)
-    fun updateDelivery(id: Long, startAddress: String, endAddress: String): Delivery
+    fun updateDelivery(id: Long, startAddress: String, endAddress: String, deliveryTourId: String?): Delivery
 
     /**
      * Deletes the delivery associated to the given ID.

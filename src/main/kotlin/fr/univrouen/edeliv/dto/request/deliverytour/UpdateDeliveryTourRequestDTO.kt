@@ -22,6 +22,11 @@ class UpdateDeliveryTourRequestDTO(
     var newEndDate: Instant,
 
     /**
+     * The deliverer associated to this tour.
+     */
+    var delivererId: Long,
+
+    /**
      * The deliveries (IDs) associated to this tour.
      */
     var deliveries: List<Long>,

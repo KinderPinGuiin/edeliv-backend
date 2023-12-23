@@ -5,6 +5,7 @@ import fr.univrouen.edeliv.entity.Delivery
 import fr.univrouen.edeliv.exception.FunctionalException
 import fr.univrouen.edeliv.repository.DeliveryRepository
 import fr.univrouen.edeliv.service.DeliveryService
+import fr.univrouen.edeliv.service.DeliveryTourService
 import fr.univrouen.edeliv.service.pojo.delivery.DeliverySearchParams
 import org.springframework.data.domain.PageRequest
 import org.springframework.http.HttpStatus
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional
 @Service("standard-delivery-service")
 class StandardDeliveryService(
     private val deliveryRepository: DeliveryRepository,
+    private val deliveryTourService: DeliveryTourService,
 ) : DeliveryService {
 
     override fun getDeliveryById(id: Long): Delivery {
@@ -43,13 +45,12 @@ class StandardDeliveryService(
     }
 
     @Transactional(rollbackFor = [ Exception::class ])
-    override fun updateDelivery(id: Long, startAddress: String, endAddress: String): Delivery {
-        // TODO : Ajouter une tournée à la livraison
-
+    override fun updateDelivery(id: Long, startAddress: String, endAddress: String, deliveryTourId: String?): Delivery {
         // Get the delivery and update it
         val delivery = this.getDeliveryById(id)
         delivery.startAddress = startAddress
         delivery.endAddress = endAddress
+        delivery.tour = if (deliveryTourId != null) this.deliveryTourService.getDeliveryTourByName(deliveryTourId) else null
 
         // Return the updated deliverer
         return this.deliveryRepository.save(delivery)

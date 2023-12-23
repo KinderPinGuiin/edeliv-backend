@@ -46,12 +46,13 @@ interface DeliveryTourService {
      * @param  name                The name of the delivery to update.
      * @param  startDate           The new start date of the delivery tour.
      * @param  endDate             The new end date of the delivery tour.
+     * @param  delivererId         The new deliverer ID.
      * @param  deliveries          The IDs of the deliveries associated to this tour.
      * @return                     The updated delivery tour.
      * @throws FunctionalException Exception thrown if the given name is invalid.
      */
     @Throws(FunctionalException::class)
-    fun updateDeliveryTour(name: String, startDate: Instant, endDate: Instant, deliveries: List<Long>): DeliveryTour
+    fun updateDeliveryTour(name: String, startDate: Instant, endDate: Instant, delivererId:Long, deliveries: List<Long>): DeliveryTour
 
     /**
      * Deletes the delivery tour associated to the given name.

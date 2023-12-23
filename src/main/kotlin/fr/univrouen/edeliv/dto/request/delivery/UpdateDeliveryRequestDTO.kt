@@ -18,4 +18,9 @@ class UpdateDeliveryRequestDTO(
      * The new location of where the delivery should arrive.
      */
     var newEndAddress: String,
+
+    /**
+     * The delivery tour associated to this delivery.
+     */
+    var deliveryTourId: String?,
 )
