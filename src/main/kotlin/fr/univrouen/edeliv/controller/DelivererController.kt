@@ -2,15 +2,12 @@ package fr.univrouen.edeliv.controller
 
 import fr.univrouen.edeliv.dto.request.deliverer.CreateDelivererRequestDTO
 import fr.univrouen.edeliv.dto.request.deliverer.UpdateDelivererRequestDTO
-import fr.univrouen.edeliv.dto.response.deliverer.DelivererResponseDTO
 import fr.univrouen.edeliv.dto.response.search.SearchResultResponseDTO
 import fr.univrouen.edeliv.service.DelivererService
 import fr.univrouen.edeliv.service.pojo.deliverer.DelivererSearchParams
-import org.modelmapper.ModelMapper
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMethod
@@ -25,7 +22,6 @@ import java.time.Instant
 @CrossOrigin(origins = [ "*" ], methods = [ RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE ])
 class DelivererController(
     private val delivererService: DelivererService,
-    private val modelMapper: ModelMapper,
 ) {
 
     companion object {
@@ -59,7 +55,7 @@ class DelivererController(
                 DelivererSearchParams(
                     page, pageSize, minDate, maxDate, isDelivererAvailable, nameSort, creationDateSort, nameFilter
                 )
-            ).map { deliverer -> this.modelMapper.map(deliverer, DelivererResponseDTO::class.java) }
+            )
         )
 
 

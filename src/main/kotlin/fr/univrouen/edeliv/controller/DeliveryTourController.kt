@@ -2,10 +2,8 @@ package fr.univrouen.edeliv.controller
 
 import fr.univrouen.edeliv.dto.request.deliverytour.CreateDeliveryTourRequestDTO
 import fr.univrouen.edeliv.dto.request.deliverytour.UpdateDeliveryTourRequestDTO
-import fr.univrouen.edeliv.dto.response.deliverytour.DeliveryTourResponseDTO
 import fr.univrouen.edeliv.service.DeliveryTourService
 import fr.univrouen.edeliv.service.pojo.deliverytour.DeliveryTourSearchParam
-import org.modelmapper.ModelMapper
 import org.springframework.web.bind.annotation.*
 import java.time.Instant
 
@@ -15,7 +13,6 @@ import java.time.Instant
 @RestController
 class DeliveryTourController(
     private val deliveryTourService: DeliveryTourService,
-    private val modelMapper: ModelMapper,
 ) {
 
     companion object {
