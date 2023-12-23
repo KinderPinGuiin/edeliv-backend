@@ -37,15 +37,13 @@ class DeliveryTourController(
         @RequestParam("tourDate") tourDate: Instant?,
     ) =
         this.deliveryTourService.getAllDeliveryTours(DeliveryTourSearchParam(page, pageSize, tourDate))
-            .map { deliveryTour -> this.modelMapper.map(deliveryTour, DeliveryTourResponseDTO::class.java) }
 
     /**
      * @param  name The name of the delivery tour to retrieve.
      * @return      The delivery tour associated to the given name.
      */
     @GetMapping(GET_DELIVERY_TOUR)
-    fun getDeliveryTour(@RequestParam("name") name: String) =
-        this.modelMapper.map(this.deliveryTourService.getDeliveryTourByName(name), DeliveryTourResponseDTO::class.java)
+    fun getDeliveryTour(@RequestParam("name") name: String) = this.deliveryTourService.getDeliveryTourByName(name)
 
     /**
      * Creates a delivery tour with the given information.
@@ -55,14 +53,11 @@ class DeliveryTourController(
      */
     @PostMapping(CREATE_DELIVERY_TOUR)
     fun createDeliveryTour(@RequestBody creationRequest: CreateDeliveryTourRequestDTO) =
-        this.modelMapper.map(
-            this.deliveryTourService.createDeliveryTour(
-                creationRequest.name,
-                creationRequest.startDate,
-                creationRequest.endDate,
-                creationRequest.delivererId,
-            ),
-            DeliveryTourResponseDTO::class.java
+        this.deliveryTourService.createDeliveryTour(
+            creationRequest.name,
+            creationRequest.startDate,
+            creationRequest.endDate,
+            creationRequest.delivererId,
         )
 
     /**
@@ -73,11 +68,8 @@ class DeliveryTourController(
      */
     @PostMapping(UPDATE_DELIVERY_TOUR)
     fun updateDeliveryTour(@RequestBody updateRequest: UpdateDeliveryTourRequestDTO) =
-        this.modelMapper.map(
-            this.deliveryTourService.updateDeliveryTour(
-                updateRequest.name, updateRequest.newStartDate, updateRequest.newEndDate, updateRequest.deliveries
-            ),
-            DeliveryTourResponseDTO::class.java
+        this.deliveryTourService.updateDeliveryTour(
+            updateRequest.name, updateRequest.newStartDate, updateRequest.newEndDate, updateRequest.deliveries
         )
 
     /**
@@ -87,7 +79,6 @@ class DeliveryTourController(
      * @return      The removed delivery tour.
      */
     @DeleteMapping(DELETE_DELIVERY_TOUR)
-    fun deleteDeliveryTour(@RequestParam("name") name: String) =
-        this.modelMapper.map(this.deliveryTourService.deleteDeliveryTour(name), DeliveryTourResponseDTO::class.java)
+    fun deleteDeliveryTour(@RequestParam("name") name: String) = this.deliveryTourService.deleteDeliveryTour(name)
 
 }

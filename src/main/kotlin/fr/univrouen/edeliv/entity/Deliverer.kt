@@ -1,10 +1,8 @@
 package fr.univrouen.edeliv.entity
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
-import jakarta.persistence.Temporal
-import jakarta.persistence.TemporalType
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonManagedReference
+import jakarta.persistence.*
 import java.time.Instant
 
 /**
@@ -33,9 +31,16 @@ class Deliverer(
      * The deliverer's creation date.
      */
     @Temporal(TemporalType.TIMESTAMP)
-    var creationDate: Instant
+    var creationDate: Instant,
+
+    /**
+     * The delivery tours associated to this deliverer.
+     */
+    @OneToMany(mappedBy = "deliverer")
+    @JsonIgnoreProperties("deliverer")
+    var deliveryTours: MutableList<DeliveryTour>,
 ) {
 
-    constructor(): this(0, "", true, Instant.now())
+    constructor(): this(0, "", true, Instant.now(), mutableListOf())
 
 }

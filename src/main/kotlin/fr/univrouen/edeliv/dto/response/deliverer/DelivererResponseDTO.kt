@@ -1,5 +1,6 @@
 package fr.univrouen.edeliv.dto.response.deliverer
 
+import fr.univrouen.edeliv.dto.response.deliverytour.DeliveryTourResponseDTO
 import java.time.Instant
 
 /**
@@ -25,8 +26,13 @@ class DelivererResponseDTO(
      * The deliverer's creation date.
      */
     var creationDate: Instant,
+
+    /**
+     * A list of all the delivery tours associated to this deliverer.
+     */
+    var deliveryTours: List<DeliveryTourResponseDTO>,
 ) {
 
-    constructor(): this(0, "", true, Instant.MIN)
+    constructor(): this(0, "", true, Instant.MIN, listOf())
 
 }

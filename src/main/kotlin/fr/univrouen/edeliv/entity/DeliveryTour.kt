@@ -1,5 +1,8 @@
 package fr.univrouen.edeliv.entity
 
+import com.fasterxml.jackson.annotation.JsonBackReference
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import jakarta.persistence.*
 import java.time.Instant
 
@@ -31,12 +34,14 @@ class DeliveryTour(
      */
     @ManyToOne
     @JoinColumn(name = "deliverer_id", nullable = false)
+    @JsonIgnoreProperties("deliveryTours")
     var deliverer: Deliverer,
 
     /**
      * The deliveries associated to this tour.
      */
     @OneToMany(mappedBy = "tour")
+    @JsonIgnoreProperties("tour")
     var deliveries: MutableList<Delivery>
 ) {
 

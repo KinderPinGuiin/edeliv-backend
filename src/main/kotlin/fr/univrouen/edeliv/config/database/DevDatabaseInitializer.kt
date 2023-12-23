@@ -46,14 +46,14 @@ class DevDatabaseInitializer(
      * Initialize the development deliverers.
      */
     fun initDeliverers() {
-        this.delivererRepository.save(Deliverer(0L, "Leo Marcus", true, Instant.now()))
-        this.delivererRepository.save(Deliverer(0L, "Sébastien Pedro", false, Instant.now()))
+        this.delivererRepository.save(Deliverer(0L, "Leo Marcus", true, Instant.now(), mutableListOf()))
+        this.delivererRepository.save(Deliverer(0L, "Sébastien Pedro", false, Instant.now(), mutableListOf()))
 
-        this.delivererRepository.save(Deliverer(0L, "Kilian Lefebvre", true, Instant.now().minus(1, ChronoUnit.DAYS)))
-        this.delivererRepository.save(Deliverer(0L, "Laura Delmand", false, Instant.now().minus(1, ChronoUnit.DAYS)))
+        this.delivererRepository.save(Deliverer(0L, "Kilian Lefebvre", true, Instant.now().minus(1, ChronoUnit.DAYS), mutableListOf()))
+        this.delivererRepository.save(Deliverer(0L, "Laura Delmand", false, Instant.now().minus(1, ChronoUnit.DAYS), mutableListOf()))
 
-        this.delivererRepository.save(Deliverer(0L, "Robin Sean", true, Instant.now().minus(7, ChronoUnit.DAYS)))
-        this.delivererRepository.save(Deliverer(0L, "Roberta Miguel", false, Instant.now().minus(7, ChronoUnit.DAYS)))
+        this.delivererRepository.save(Deliverer(0L, "Robin Sean", true, Instant.now().minus(7, ChronoUnit.DAYS), mutableListOf()))
+        this.delivererRepository.save(Deliverer(0L, "Roberta Miguel", false, Instant.now().minus(7, ChronoUnit.DAYS), mutableListOf()))
     }
 
     /**

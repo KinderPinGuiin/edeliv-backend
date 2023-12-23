@@ -68,8 +68,7 @@ class DelivererController(
      * @return    The deliverer associated to the given ID.
      */
     @GetMapping(GET_DELIVERER)
-    fun getDeliverer(@RequestParam("id") id: Long) =
-        this.modelMapper.map(this.delivererService.getDelivererById(id), DelivererResponseDTO::class.java)
+    fun getDeliverer(@RequestParam("id") id: Long) = this.delivererService.getDelivererById(id)
 
     /**
      * Creates a deliverer with the given information.
@@ -79,10 +78,7 @@ class DelivererController(
      */
     @PostMapping(CREATE_DELIVERER)
     fun createDeliverer(@RequestBody creationRequest: CreateDelivererRequestDTO) =
-        this.modelMapper.map(
-            this.delivererService.createDeliverer(creationRequest.name, creationRequest.available),
-            DelivererResponseDTO::class.java
-        )
+        this.delivererService.createDeliverer(creationRequest.name, creationRequest.available)
 
     /**
      * Updates a deliverer with the given information.
@@ -92,10 +88,7 @@ class DelivererController(
      */
     @PostMapping(UPDATE_DELIVERER)
     fun updateDeliverer(@RequestBody updateRequest: UpdateDelivererRequestDTO) =
-        this.modelMapper.map(
-            this.delivererService.updateDeliverer(updateRequest.id, updateRequest.newName, updateRequest.newIsAvailable),
-            DelivererResponseDTO::class.java
-        )
+        this.delivererService.updateDeliverer(updateRequest.id, updateRequest.newName, updateRequest.newIsAvailable)
 
     /**
      * Removes the given deliverer.
@@ -104,7 +97,6 @@ class DelivererController(
      * @return    The removed deliverer.
      */
     @DeleteMapping(DELETE_DELIVERER)
-    fun deleteDeliverer(@RequestParam("id") id: Long) =
-        this.modelMapper.map(this.delivererService.deleteDeliverer(id), DelivererResponseDTO::class.java)
+    fun deleteDeliverer(@RequestParam("id") id: Long) = this.delivererService.deleteDeliverer(id)
 
 }

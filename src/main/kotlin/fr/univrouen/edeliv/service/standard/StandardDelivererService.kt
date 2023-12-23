@@ -65,7 +65,7 @@ class StandardDelivererService(
         }
 
         // Save the deliverer created with the given information
-        return this.delivererRepository.save(Deliverer(0, name, isAvailable, Instant.now()))
+        return this.delivererRepository.save(Deliverer(0, name, isAvailable, Instant.now(), mutableListOf()))
     }
 
     @Transactional(rollbackFor = [ Exception::class ])

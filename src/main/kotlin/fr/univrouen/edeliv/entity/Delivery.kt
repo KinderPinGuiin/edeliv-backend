@@ -1,5 +1,6 @@
 package fr.univrouen.edeliv.entity
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import jakarta.persistence.*
 
 /**
@@ -26,6 +27,7 @@ class Delivery(
 
     @ManyToOne
     @JoinColumn(name = "tour_id", nullable = true)
+    @JsonBackReference
     var tour: DeliveryTour?,
 ) {
 

@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
+
 /**
  * Configure the ModelMapper instance.
  */
@@ -12,7 +13,9 @@ class ModelMapperConfiguration {
 
     @Bean
     fun modelMapper(): ModelMapper {
-        return ModelMapper();
+        val mapper =  ModelMapper();
+
+        return mapper
     }
 
 }

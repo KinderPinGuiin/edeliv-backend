@@ -23,11 +23,16 @@ class DeliveryTourResponseDTO(
     var endDate: Instant,
 
     /**
+     * The deliverer associated to this delivery tour.
+     */
+    var deliverer: DeliveryResponseDTO,
+
+    /**
      * The deliveries associated to this tour.
      */
     var deliveries: MutableList<DeliveryResponseDTO>
 ) {
 
-    constructor(): this("", Instant.EPOCH, Instant.EPOCH, mutableListOf())
+    constructor(): this("", Instant.EPOCH, Instant.EPOCH, DeliveryResponseDTO(), mutableListOf())
 
 }
