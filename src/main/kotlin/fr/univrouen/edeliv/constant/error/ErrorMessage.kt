@@ -8,5 +8,15 @@ enum class ErrorMessage(val message: String) {
 
     // Deliverer errors
     INVALID_DELIVERER_ID("L'identifiant du livreur est invalide."),
+    EMPTY_DELIVERER_NAME("Le nom du livreur ne doit pas être vide."),
+
+    // Delivery errors
+    INVALID_DELIVERY_ID("L'identifiant de la livraison est invalide."),
+
+    // Delivery tour errors
+    INVALID_DELIVERY_TOUR_ID("L'identifiant de la tournée est invalide."),
+    TOUR_ALREADY_EXISTS("La tournée demandée existe déjà."),
+    INVALID_TOUR_END_DATE("La date de fin de la tournée est invalide."),
+    TOUR_ALREADY_EXISTS_AT_DATE("La date donnée est indisponible pour ce livreur (tournée déjà affectée)."),
 
 }

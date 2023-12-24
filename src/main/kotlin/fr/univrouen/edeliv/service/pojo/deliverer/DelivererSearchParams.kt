@@ -3,7 +3,7 @@ package fr.univrouen.edeliv.service.pojo.deliverer
 import java.time.Instant
 
 /**
- * Search parameters that can be passed to the {#link DelivererService@getAllDeliverers} method.
+ * Search parameters that can be passed to the getAllDeliverers method.
  */
 class DelivererSearchParams(
     /**
@@ -12,7 +12,7 @@ class DelivererSearchParams(
     val page: Int?,
 
     /**
-     * The number element per page (default : 10).
+     * The number of element per page (default : 10).
      */
     val pageSize: Int?,
 
@@ -27,7 +27,7 @@ class DelivererSearchParams(
     val maxDate: Instant?,
 
     /**
-     * Should the deliverer only be available ? (default : false)
+     * Is the deliverer available ?
      */
     val isDelivererAvailable: Boolean?,
 

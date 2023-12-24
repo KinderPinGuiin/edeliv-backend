@@ -12,5 +12,5 @@ class CreateDelivererRequestDTO(
     /**
      * Indicates if the deliverer is available or not.
      */
-    var isAvailable: Boolean,
+    var available: Boolean,
 )

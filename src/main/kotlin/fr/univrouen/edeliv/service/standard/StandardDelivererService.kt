@@ -21,6 +21,8 @@ class StandardDelivererService(
     private val delivererRepository: DelivererRepository,
 ) : DelivererService {
 
+    override fun getDelivererAmount(): Long = this.delivererRepository.count()
+
     override fun getDelivererById(id: Long): Deliverer {
         // Get the deliverer and throw an exception if it is null
         return this.delivererRepository.findById(id).orElse(null)
@@ -48,8 +50,8 @@ class StandardDelivererService(
         // Retrieve the asked deliverers sorted and filtered
         return this.delivererRepository.findAllWithSearchParams(
             searchParams.minDate ?: Instant.EPOCH,
-            searchParams.maxDate ?: Instant.MAX,
-            searchParams.isDelivererAvailable ?: false,
+            searchParams.maxDate ?: Instant.now(),
+            searchParams.isDelivererAvailable,
             searchParams.nameFilter,
             PageRequest.of(searchParams.page ?: 0, searchParams.pageSize ?: 10, Sort.by(orders)),
         )
@@ -57,14 +59,26 @@ class StandardDelivererService(
 
     @Transactional(rollbackFor = [ Exception::class ])
     override fun createDeliverer(name: String, isAvailable: Boolean): Deliverer {
+        // Check that the name is not empty
+        if (name.trim().isEmpty()) {
+            throw FunctionalException(ErrorMessage.EMPTY_DELIVERER_NAME, HttpStatus.BAD_REQUEST)
+        }
+
         // Save the deliverer created with the given information
-        return this.delivererRepository.save(Deliverer(0, name, isAvailable, Instant.now()))
+        return this.delivererRepository.save(Deliverer(0, name, isAvailable, Instant.now(), mutableListOf()))
     }
 
     @Transactional(rollbackFor = [ Exception::class ])
     override fun updateDeliverer(id: Long, newName: String, newIsAvailable: Boolean): Deliverer {
-        // Get the deliverer and update it
+        // Get the deliverer
         val deliverer = this.getDelivererById(id)
+
+        // Check that the name is not empty
+        if (newName.trim().isEmpty()) {
+            throw FunctionalException(ErrorMessage.EMPTY_DELIVERER_NAME, HttpStatus.BAD_REQUEST)
+        }
+
+        // Update the deliverer
         deliverer.name = newName
         deliverer.isAvailable = newIsAvailable
 
