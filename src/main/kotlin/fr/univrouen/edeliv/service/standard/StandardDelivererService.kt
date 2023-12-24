@@ -50,7 +50,7 @@ class StandardDelivererService(
         // Retrieve the asked deliverers sorted and filtered
         return this.delivererRepository.findAllWithSearchParams(
             searchParams.minDate ?: Instant.EPOCH,
-            searchParams.maxDate ?: Instant.MAX,
+            searchParams.maxDate ?: Instant.now(),
             searchParams.isDelivererAvailable,
             searchParams.nameFilter,
             PageRequest.of(searchParams.page ?: 0, searchParams.pageSize ?: 10, Sort.by(orders)),
