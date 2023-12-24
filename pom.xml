@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>fr.univrouen</groupId>
 	<artifactId>edeliv</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.1-RELEASE</version>
 	<name>edeliv</name>
 	<description>Projet de Fullstack. Plateforme de gestion de livraison.</description>
 	<properties>
